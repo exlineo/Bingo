@@ -25,8 +25,9 @@ export class BingoService {
   }
 
   // Ecris score
-  ecritPromoScore(promo:string):void{
-    this.http.post('assets/datas/score.php', promo).subscribe(scoreEcrit => {
+  ecritPromoScore(adr:string, score:number):void{
+    let promo:object = {adr:adr, score:score};
+    this.http.post('assets/datas/scores.php', promo).subscribe(scoreEcrit => {
       // Renvoyer la liste des promos depuis le fichier promos.js
       return scoreEcrit;
     });

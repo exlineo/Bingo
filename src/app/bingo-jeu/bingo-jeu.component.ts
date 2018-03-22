@@ -25,7 +25,7 @@ export class BingoJeuComponent implements OnInit, AfterViewInit, OnDestroy {
   degres = 1800;
   clics:number = 0;
   score=0;
-  scorePromo:number;
+  scorePromo:number=0;
 
   // Version avec le cochon
   piece:boolean=false;
@@ -53,7 +53,10 @@ export class BingoJeuComponent implements OnInit, AfterViewInit, OnDestroy {
       if(this.promo){
         // Lancer le chargement des données
         this.bingoServ.getPromoScore(this.promo).subscribe(score =>{
-          this.scorePromo = score;
+          // Vérification du score avant une mise à jour
+          if(score>=0){
+            this.scorePromo = score;
+          }
           console.log("Score promo", this.scorePromo);
         });
       }
@@ -99,6 +102,9 @@ export class BingoJeuComponent implements OnInit, AfterViewInit, OnDestroy {
         let tmp_score:number = Math.round(6*(1-eval((totalDegre/360-Math.trunc(totalDegre/360)).toFixed(1))));
         this.score = this.gains[tmp_score-1];
         this.scorePromo += this.gains[tmp_score-1];
+        // Ecriture des scores
+        this.bingoServ.ecritPromoScore(this.promo, this.scorePromo);
       }, 5000);
     };
+    
 }
