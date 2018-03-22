@@ -1,0 +1,103 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+html,
+body {
+    min-width: 100%;
+    min-height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background: #000;
+    color: #FFF;
+}
+
+h1,
+h2 {
+    text-transform: uppercase;
+    margin: 20px;
+}
+
+section {
+    width: 100%;
+    margin: auto;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+section article {
+    /* min-width: 60%; */
+    padding: 20px;
+    /* flex: 1; */
+}
+
+section aside {
+    min-width: 200px;
+    min-height: 500px;
+}
+
+nav {
+    position: absolute;
+    top: 5px;
+    right: 20px;
+    max-width: 30px;
+}
+
+#jeu {
+    /* display: inline-flex;
+    margin-top: 20px; */
+}
+
+#niveau {
+    background: linear-gradient(to top, #ff3232 0%, #f99b27 33%, #ffff30 66%, #27d600 100%);
+    width: 40px;
+    min-height: 500px;
+    margin: auto;
+}
+
+.centre {
+    text-align: center;
+}
+
+.centre img {
+    margin: auto;
+}
+
+#tirelire:hover {
+    cursor: pointer;
+}
+
+#piece {
+    background: url("assets/images/pieces_2.webp") 50% 50% no-repeat;
+    width: 400px;
+    height: 400px;
+    position: absolute;
+    left: 30%;
+    margin-left: -200px;
+    margin-top: -50px;
+}
+
+#gagne {
+    background: url("assets/images/level_up.webp") 50% 50% no-repeat;
+    width: 400px;
+    height: 400px;
+    position: absolute;
+    right: 0%;
+    top: 70%;
+}
+
+#infos {
+    position: absolute;
+    top: 5px;
+    right: 40px;
+    width: 400px;
+    color: #000;
+    background: #FFF;
+    padding: 10px 20px;
+}
+
+.jalon {}

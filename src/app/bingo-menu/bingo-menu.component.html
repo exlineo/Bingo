@@ -1,0 +1,21 @@
+<nav>
+    <button mat-button [matMenuTriggerFor]="promo">
+    <mat-icon>rowing</mat-icon>
+    </button>
+    <mat-menu #promo="matMenu">
+        <button mat-menu-item (click)="vasY('/jeu', 'WD')">WD</button>
+        <button mat-menu-item (click)="vasY('/jeu', 'DEV')">DEV</button>
+        <button mat-menu-item (click)="vasY('/jeu', 'JS')">JS</button>
+        <button mat-menu-item (click)="vasY('/jeu', 'SP')">SIMPLON</button>
+    </mat-menu>
+    <button (mouseover)="vue = !vue" (mouseout)="vue = !vue"><mat-icon>info</mat-icon></button>
+    <button href="" (click)="vasY('/config')">
+        <mat-icon>settings</mat-icon>
+    </button>
+    <button (click)="vasY('/connexion')"><mat-icon>vpn_key</mat-icon></button>
+    <div id="infos" [hidden]="vue">
+        <p>Vous remplissez des défis ? Vous participez à la vie du groupe ? Votre boulot est remarquable ? Bref, vous nous faites plaisir !</p>
+        <p>Alors vous gagnez des BITS et des COINS</p>
+        <p>Franchissez les étapes une à une, gagnez en réputation et accessoirement, quelques avantages...</p>
+    </div>
+</nav>

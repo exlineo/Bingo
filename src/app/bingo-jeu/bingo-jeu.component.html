@@ -1,0 +1,43 @@
+<section id="jeu">
+    <article class="roue">
+        <!--<div id="piece" [hidden]="piece"></div>
+        <img src="images/tirelire.png" id="tirelire" (click)="clicTirelire()">-->
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+        <h3>Le terrible score de la promo {{scorePromo}} points !!!</h3>
+        <div id="wheel" class="machance" #roue>
+            <div id="inner-wheel" #roueInner>
+                <div class="sec"><span class="fa fa-thumbs-o-down"></span></div>
+                <div class="sec"><span class="fa fa-comment-o"></span></div>
+                <div class="sec"><span class="fa fa-smile-o"></span></div>
+                <div class="sec"><span class="fa fa-heart-o"></span></div>
+                <div class="sec"><span class="fa fa-star-o"></span></div>
+                <div class="sec"><span class="fa fa-thumbs-o-up"></span></div>
+            </div>
+
+            <div id="spin" (click)="lanceJeu()">
+                <div id="inner-spin"></div>
+            </div>
+
+            <div id="shine"></div>
+        </div>
+
+        <div id="txt"></div>
+        <div #lateuf class="lateuf" *ngIf="score > 0" [@apparaitAnimation]>
+            Ouuaaiiiss !!! Vous avez gagné {{score}} points
+        </div>
+        <div #youhou class="lateuf" *ngIf="levelUp" [@apparaitAnimation]>
+            Youhoouuu !!! Vous avez gagné {{cadeau}}
+        </div>
+    </article>
+
+    <aside>
+        <div id="niveau">
+            <div id="jauge"></div>
+            <div *ngFor="let c of cadeaux; index as i" class="jalon" [style.marginTop]="c['pos']"></div>
+            <div id="marquescore" #marquescore [style.marginTop]="[score_pos]">
+                <div id="marquevaleur">{{score_cumule}}</div>
+            </div>
+        </div>
+    </aside>
+
+</section>
