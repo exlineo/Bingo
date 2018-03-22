@@ -14,7 +14,7 @@ export class BingoMenuComponent implements OnInit {
   ngOnInit() {
   }
 
-  vasY(adr:string, params:object=null):void{
+  vasY(adr:string, params:string=null):void{
     console.log(params);
     !params ? this.router.navigate([adr]) : this.router.navigate([adr, params]);
   }
