@@ -36,5 +36,11 @@ export class BingoService {
         console.log(scoreEcrit);
       });
     }
-}
+  }
+  
+  // Chargement du tableau des jalons pour le calcul des gains
+  getJalons(promo:string):Observable<number[]>{
+    // Chargement du fichier des jalons à partir du nom de la promo
+    return this.http.get<number[]>('assets/datas/'+promo+".jalons.js");
+  }
 }

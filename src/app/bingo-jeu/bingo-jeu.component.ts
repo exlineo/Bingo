@@ -22,28 +22,28 @@ export class BingoJeuComponent implements OnInit, AfterViewInit, OnDestroy {
   sub:any; // Souscrire aux paramètres de l'URL
 
   // La roue tourne : degres, nombre de clics sur le bouton de jeu = 0
-  degres = 1800;
-  clics:number = 0;
-  score=0;
-  scorePromo:number=0;
+  degres = 1800; // Le nombre de tours initiaux
+  clics:number = 0; // Les clics sur le boutons de la roue
+  score=0; // Le score joué
+  scorePromo:number=0; // Le score de la promo choisie
+  jalons:Array<number>; // Les jalons pour les gains
 
   // Version avec le cochon
   piece:boolean=false;
 
   // Un niveau est gagné, c'est la fête !
-  score_cumule:number=250; // Score actuel
-  score_pos:string='250px';
-  levelUp:boolean;
+  score_pos:string='250px'; // Position de la ligne de score sur la barre d'affichage
+  levelUp:boolean; // Un niveau est gagné
 
-  audioPiece = new Audio('assets/images/sons/Tadaaa.mp3');
+  audioPiece = new Audio('assets/images/sons/Tadaaa.mp3'); // Jouer des sons lors d'événements
   audioUp = new Audio('assets/images/sons/Taratata.mp3');
 
   // Tableau des gains de la roue
-  gains:number[] = [1,2,3,5,10,25];
+  gains:number[] = [1,2,3,5,10,25]; // Tableau des scores
   cadeaux:object[] = [{pos:'10px', cadeau:'Une soirée ciné'}, {pos:'100px', cadeau:'Un repas de classe !'}, {pos:'250px', cadeau:'Un deuxième repas de classe !!'}, {pos:'400px', cadeau:'Un super voyage de classe !!!'}];
   cadeau:string="";
   constructor(private route: ActivatedRoute, private bingoServ: BingoService) { }
-  
+  // Initialisation du composant
   ngOnInit() {
     console.log(this.promo);
     // Synchro avec l'adresse pour récupérer la promo
@@ -57,7 +57,11 @@ export class BingoJeuComponent implements OnInit, AfterViewInit, OnDestroy {
           if(score>=0){
             this.scorePromo = score;
           }
-          console.log("Score promo", this.scorePromo);
+        });
+        // Récupération des jalons de la promo
+        this.bingoServ.getJalons(this.promo).subscribe(jalons =>{
+          this.jalons = jalons;
+          console.log(this.jalons);       
         });
       }
    });
@@ -69,7 +73,7 @@ export class BingoJeuComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy(){
     this.sub.unsubscribe();
   }
-
+  // Fonction plus utilisée - un petit cochon plein de sous
   clicTirelire(): void {
     // alert("Tirelire cliquée");
     this.piece = !this.piece;
