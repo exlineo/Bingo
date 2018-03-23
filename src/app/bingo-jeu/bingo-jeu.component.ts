@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit } fr
 import { glisseAnimation, apparaitAnimation } from '../animations/index';
 import { ActivatedRoute } from '@angular/router';
 import { BingoService } from '../bingo.service';
+import { Jalons } from '../model/jalons';
 // http://touchetlaurent.fr/developments/spinning-game/
 // https://codepen.io/AndreCortellini/pen/vERwmL
 
@@ -26,22 +27,18 @@ export class BingoJeuComponent implements OnInit, AfterViewInit, OnDestroy {
   clics:number = 0; // Les clics sur le boutons de la roue
   score=0; // Le score joué
   scorePromo:number=0; // Le score de la promo choisie
-  jalons:Array<number>; // Les jalons pour les gains
-
-  // Version avec le cochon
-  piece:boolean=false;
+  jalons:Array<Jalons>; // Les jalons pour les gains
+  seuil:number; // seuil des gains
+  getScore:any; // le timeout pour la rotation de la roue
 
   // Un niveau est gagné, c'est la fête !
-  score_pos:string='250px'; // Position de la ligne de score sur la barre d'affichage
-  levelUp:boolean; // Un niveau est gagné
+  score_pos:string='500px'; // Position de la ligne de score sur la barre d'affichage
+  levelUp:boolean=false; // Un niveau est gagné
+  gains:number[] = [1,2,3,5,10,25]; // Tableau des gains lorsque la roue a tourné
 
-  audioPiece = new Audio('assets/images/sons/Tadaaa.mp3'); // Jouer des sons lors d'événements
-  audioUp = new Audio('assets/images/sons/Taratata.mp3');
+  audioPiece = new Audio('assets/sons/Tadaaa.mp3'); // Jouer des sons lors d'événements
+  audioUp = new Audio('assets/sons/Taratata.mp3');
 
-  // Tableau des gains de la roue
-  gains:number[] = [1,2,3,5,10,25]; // Tableau des scores
-  cadeaux:object[] = [{pos:'10px', cadeau:'Une soirée ciné'}, {pos:'100px', cadeau:'Un repas de classe !'}, {pos:'250px', cadeau:'Un deuxième repas de classe !!'}, {pos:'400px', cadeau:'Un super voyage de classe !!!'}];
-  cadeau:string="";
   constructor(private route: ActivatedRoute, private bingoServ: BingoService) { }
   // Initialisation du composant
   ngOnInit() {
@@ -56,13 +53,17 @@ export class BingoJeuComponent implements OnInit, AfterViewInit, OnDestroy {
           // Vérification du score avant une mise à jour
           if(score>=0){
             this.scorePromo = score;
+            this.setScorePosition(); // régler la position du score
           }
         });
         // Récupération des jalons de la promo
         this.bingoServ.getJalons(this.promo).subscribe(jalons =>{
           this.jalons = jalons;
-          console.log(this.jalons);       
+          console.log(this.jalons);
+          // Attribution du seuil initial des gains
+          this.seuil = this.calculeSeuil();
         });
+        
       }
    });
   }
@@ -73,19 +74,10 @@ export class BingoJeuComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy(){
     this.sub.unsubscribe();
   }
-  // Fonction plus utilisée - un petit cochon plein de sous
-  clicTirelire(): void {
-    // alert("Tirelire cliquée");
-    this.piece = !this.piece;
-    setTimeout (() => {
-      this.piece = !this.piece;
-    }, 1000);
-    this.audioPiece.play();
-  }
   
   /*WHEEL SPIN FUNCTION*/
-  lanceJeu = function(){
-      //add 1 every click
+  lanceJeu(){
+      // Ajouter 1 à chaque clic
       this.clics ++;
       this.score = 0;
       
@@ -105,10 +97,43 @@ export class BingoJeuComponent implements OnInit, AfterViewInit, OnDestroy {
       this.getScore = setTimeout(() => {
         let tmp_score:number = Math.round(6*(1-eval((totalDegre/360-Math.trunc(totalDegre/360)).toFixed(1))));
         this.score = this.gains[tmp_score-1];
-        this.scorePromo += this.gains[tmp_score-1];
+        this.scorePromo += this.gains[tmp_score-1]; // Calcul du nouveau score
+        this.setScorePosition();
         // Ecriture des scores
         this.bingoServ.ecritPromoScore(this.promo, this.scorePromo);
+        // Calcul du nouveau seuil et attribution d'un gain éventuel
+        if(this.calculeSeuil() > this.seuil){
+          this.seuil = this.calculeSeuil(); // Le nouveau seuil pour le jeu
+          this.ouaiiisGagneeee(); // Affichage du gain
+        }
       }, 5000);
     };
-    
+
+    // Positionner le score sur l'affichage
+    setScorePosition(){
+      let pos = 500-this.scorePromo;
+      this.score_pos = pos+"px";
+    }
+
+    // Calcul des jalons, somme-nous au-dessus d'un seuil ?
+    calculeSeuil():number{
+      let s = 0;
+      for(var i=0; i<this.jalons.length; i++){
+        if(this.scorePromo >= this.jalons[i].val){
+          s = i;
+        }
+      }
+      return s;
+    }
+
+    // Un cadeau a été gagné !
+    ouaiiisGagneeee(){
+      this.audioUp.play();
+      this.levelUp = true;
+    }
+    // Cacher le gain si c'est too much
+    cacheBingo(){
+      this.audioUp.pause();
+      this.levelUp = false;
+    }
 }

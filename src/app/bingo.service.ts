@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 
+import { Jalons } from './model/jalons';
+
 @Injectable()
 export class BingoService {
 
@@ -39,8 +41,8 @@ export class BingoService {
   }
   
   // Chargement du tableau des jalons pour le calcul des gains
-  getJalons(promo:string):Observable<number[]>{
+  getJalons(promo:string):Observable<Jalons[]>{
     // Chargement du fichier des jalons à partir du nom de la promo
-    return this.http.get<number[]>('assets/datas/'+promo+".jalons.js");
+    return this.http.get<Jalons[]>('assets/datas/'+promo+".jalons.js");
   }
 }

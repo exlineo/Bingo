@@ -25,17 +25,18 @@
         <div #lateuf class="lateuf" *ngIf="score > 0" [@apparaitAnimation]>
             Ouuaaiiiss !!! Vous avez gagné {{score}} points
         </div>
-        <div #youhou class="lateuf" *ngIf="levelUp" [@apparaitAnimation]>
-            Youhoouuu !!! Vous avez gagné {{cadeau}}
+        <div #youhou class="lateuf" *ngIf="levelUp" [@apparaitAnimation] (click)="cacheBingo()">
+            <img src="assets/images/Bingo.gif" />
+            <h3>Youhoouuu !!! Vous avez gagné : {{jalons[seuil].gain}}</h3>
         </div>
     </article>
 
     <aside>
         <div id="niveau">
             <div id="jauge"></div>
-            <div *ngFor="let c of cadeaux; index as i" class="jalon" [style.marginTop]="c['pos']"></div>
+            <div *ngFor="let j of jalons; index as i" class="jalon" [style.marginTop]="j['val']+'px'"></div>
             <div id="marquescore" #marquescore [style.marginTop]="[score_pos]">
-                <div id="marquevaleur">{{score_cumule}}</div>
+                <div id="marquevaleur">{{scorePromo}} pts</div>
             </div>
         </div>
     </aside>
