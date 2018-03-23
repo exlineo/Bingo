@@ -26,10 +26,15 @@ export class BingoService {
 
   // Ecris score
   ecritPromoScore(adr:string, score:number):void{
-    let promo:string = "{'adr':"+adr+", 'score':"+score+"}";
-    this.http.post('assets/datas/scores.php', promo).subscribe(scoreEcrit => {
-      // Renvoyer la liste des promos depuis le fichier promos.js
-      return scoreEcrit;
-    });
+    // Vérification qu'une promo a été choisie
+    if(adr){
+      let promo:object = {'adr':adr, 'score':score};
+      console.log(promo);
+      // Ecriture du score dans le fichier idoine
+      this.http.post('assets/datas/scores.php', promo).subscribe(scoreEcrit => {
+        // Renvoyer la liste des promos depuis le fichier promos.js
+        console.log(scoreEcrit);
+      });
+    }
 }
 }
