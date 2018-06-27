@@ -107,20 +107,25 @@ form{
     flex-direction:column;
 }
 
-input{
+input, button{
     border:none;
     font-size:18px;
     padding:6px 12px;
-}
-button{
     max-width:30%;
     min-width:200px;
-    border:none;
+    margin:5px auto;
+}
+input.ng-valid.ng-pristine{
+    border:1px solid green;
+}
+input.ng-invalid.ng-pristine{
+    border:1px solid red;
+}
+button{
     background:orange;
     color:white;
     padding:10px 16px;
     transition:all .3s ease-in-out;
-    margin:5px auto;
 }
 button:disabled{
     opacity:.8;
@@ -130,5 +135,5 @@ button:hover{
 }
 button .mat-icon{
     margin:0;
-    fill:white;
+    fill:white !important;
 }

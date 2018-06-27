@@ -1,5 +1,6 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { AuthService } from './auth.service';
 
 @Component({
   selector: 'app-bingo',
@@ -10,5 +11,9 @@ export class AppComponent {
 
   title = 'Bingo -- Allez-vous gagner ?';
 
-  constructor(private router: Router){}
+  constructor(public auth:AuthService, private route:Router){
+    if(auth.conne){
+      this.route.navigateByUrl('/jeu/SP');
+    }
+  }
 }
