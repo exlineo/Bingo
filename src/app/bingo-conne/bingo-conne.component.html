@@ -1,3 +1,8 @@
-<p>
-  bingo-conne works!
-</p>
+<h1>Connectez-vous pour jouer</h1>
+<form (ngSubmit)="auth.setConne(f)" #f="ngForm" *ngIf="!auth.conne">
+  <input [(ngModel)]="auth.id.id" name="id" #idCtrl="ngModel" placeholder="Un identifiant ?"/>
+  <input [(ngModel)]="auth.id.mdp" name="mdp" type="password" #mdpCtrl="ngModel" placeholder="Un mot de passe ?"/>
+  <button type="submit" [disabled]="f.invalid">SE CONNECTER</button>
+  <button type="reset">ANNULER</button>
+</form>
+<button *ngIf="auth.conne" (click)="auth.setDeconne()" >SE DECONNECTER</button>

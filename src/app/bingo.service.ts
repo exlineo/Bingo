@@ -19,11 +19,6 @@ export class BingoService {
   // Récupérer le score d'une promo spécifique
   getPromoScore(promo:string):Observable<number>{
       return this.http.get<number>('assets/datas/'+promo+'.js');
-      /*.subscribe(score => {
-        // Renvoyer la liste des promos depuis le fichier promos.js
-        console.log("Score", typeof(score), score);
-        return score;
-      });*/
   }
 
   // Ecris score

@@ -16,6 +16,8 @@ import { BingoJeuComponent } from './bingo-jeu/bingo-jeu.component';
 import { PasBingoComponent } from './pas-bingo/pas-bingo.component';
 
 import { BingoService } from './bingo.service';
+import { AuthService } from './auth.service';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -24,7 +26,8 @@ import { BingoService } from './bingo.service';
     RouterModule.forRoot(ROUTES),
     BrowserAnimationsModule,
     MatMenuModule,
-    MatIconModule
+    MatIconModule,
+    FormsModule
   ],
   declarations: [
     AppComponent,
@@ -34,7 +37,7 @@ import { BingoService } from './bingo.service';
     BingoJeuComponent,
     PasBingoComponent
   ],
-  providers: [BingoService],
-  bootstrap: [AppComponent]
+  providers: [ BingoService, AuthService ],
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }

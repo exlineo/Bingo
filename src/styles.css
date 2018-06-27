@@ -101,3 +101,34 @@ nav {
 }
 
 .jalon {}
+
+form{
+    display:flex;
+    flex-direction:column;
+}
+
+input{
+    border:none;
+    font-size:18px;
+    padding:6px 12px;
+}
+button{
+    max-width:30%;
+    min-width:200px;
+    border:none;
+    background:orange;
+    color:white;
+    padding:10px 16px;
+    transition:all .3s ease-in-out;
+    margin:5px auto;
+}
+button:disabled{
+    opacity:.8;
+}
+button:hover{
+    background: #ff3232;
+}
+button .mat-icon{
+    margin:0;
+    fill:white;
+}

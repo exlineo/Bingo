@@ -1,1 +1,0 @@
-["JS", "WD", "DEV", "SIMPLON"]
