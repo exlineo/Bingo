@@ -13,7 +13,9 @@ export class AppComponent {
 
   constructor(public auth:AuthService, private route:Router){
     if(auth.conne){
-      this.route.navigateByUrl('/jeu/SP');
+      this.route.navigate(['/jeu/', 'SP']);
+    }else{
+      this.route.navigateByUrl('/connexion');
     }
   }
 }

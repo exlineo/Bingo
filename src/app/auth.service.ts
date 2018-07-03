@@ -6,6 +6,7 @@ export class AuthService {
 
   id:object;
   conne:boolean = false;
+
   constructor(private route:Router) {
     this.id = {id:'coucou', mdp:'cava?'};
     if(sessionStorage.getItem('conne')){
@@ -14,7 +15,8 @@ export class AuthService {
   }
   // test de connexion
   setConne(id:object){
-    if(id['id'] == this.id['id'] && id['mdp'] == this.id['mdp']){
+    console.log(id['value']['id'] , this.id['id'] , id['value']['mdp'] , this.id['mdp']);
+    if(id['value']['id'] == this.id['id'] && id['value']['mdp'] == this.id['mdp']){
       this.conne = true;
       sessionStorage.setItem('conne', String(this.conne));
       this.route.navigate(['/jeu', 'SP']);

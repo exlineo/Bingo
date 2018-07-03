@@ -5,7 +5,10 @@ import { BingoService } from '../bingo.service';
 import { Jalons } from '../model/jalons';
 // http://touchetlaurent.fr/developments/spinning-game/
 // https://codepen.io/AndreCortellini/pen/vERwmL
-
+/**
+ * Composant de gestion du jeu avec la roue
+ * @class
+ */
 @Component({
   selector: 'app-bingo-jeu',
   templateUrl: './bingo-jeu.component.html',
@@ -16,7 +19,7 @@ import { Jalons } from '../model/jalons';
   host: { '[@glisseAnimation]': '' }
 })
 export class BingoJeuComponent implements OnInit, AfterViewInit, OnDestroy {
-
+  // Cibler la roue pour des interactions
   @ViewChild('roueInner') roueInterieur: ElementRef;
 
   promo: string; // Valeur de la promo récupérée de l'URL
@@ -40,8 +43,16 @@ export class BingoJeuComponent implements OnInit, AfterViewInit, OnDestroy {
   audioPiece = new Audio('assets/sons/Tadaaa.mp3'); // Jouer des sons lors d'événements
   audioUp = new Audio('assets/sons/Taratata.mp3');
 
+  /**
+   * Institatiation des classes partagées (routes et service)
+   * @constructor
+   * @param route - Activer une route pour changer de page
+   * @param bingoServ - Les données liées au jeu pour la promotion
+   */
   constructor(private route: ActivatedRoute, private bingoServ: BingoService) { }
-  // Initialisation du composant
+  /**
+   * Lancement du composant. Les données dynamiques sont récupérées
+   */
   ngOnInit() {
     console.log(this.promo);
     // Synchro avec l'adresse pour récupérer la promo
@@ -71,12 +82,16 @@ export class BingoJeuComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
   }
-
+  /**
+   * Suppression de l'observable
+   */
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
 
-  /*WHEEL SPIN FUNCTION*/
+  /**
+   * Lancement du jeu avec calcul de la rotation de la roue et renvoie des résultats
+   */
   lanceJeu() {
     // Ajouter 1 à chaque clic
     this.clics++;
@@ -109,13 +124,17 @@ export class BingoJeuComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     }, 5000);
   };
-  // Positionner le score sur l'affichage
+  /**
+   * Positionner le score sur l'affichage
+   */
   setScorePosition() {
     let pos = 500 - this.scorePromo;
     this.score_pos = pos + "px";
   }
 
-  // Calcul des jalons, somme-nous au-dessus d'un seuil ?
+  /**
+   * Calcul des jalons, somme-nous au-dessus d'un seuil ?
+   */
   calculeSeuil(): number {
     let s = 0;
     for (var i = 0; i < this.jalons.length; i++) {
@@ -125,7 +144,9 @@ export class BingoJeuComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     return s;
   }
-  // Calculer le jalon actuel
+  /**
+   * Calculer le jalon actuel
+   */
   getJalonActuel() {
     for(let i of this.jalons){
       if (this.scorePromo >= i.val) {
@@ -133,12 +154,16 @@ export class BingoJeuComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     }
   }
-  // Un cadeau a été gagné !
+  /**
+   * Un cadeau a été gagné !
+   */
   ouaiiisGagneeee() {
     this.audioUp.play();
     this.levelUp = true;
   }
-  // Cacher le gain si c'est too much
+  /**
+   * Cacher le gain si c'est too much
+   */
   cacheBingo() {
     this.audioUp.pause();
     this.levelUp = false;

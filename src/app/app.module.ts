@@ -18,6 +18,7 @@ import { PasBingoComponent } from './pas-bingo/pas-bingo.component';
 import { BingoService } from './bingo.service';
 import { AuthService } from './auth.service';
 import { FormsModule } from '@angular/forms';
+import { AuthGuard } from './auth.guard';
 
 @NgModule({
   imports: [
@@ -37,7 +38,7 @@ import { FormsModule } from '@angular/forms';
     BingoJeuComponent,
     PasBingoComponent
   ],
-  providers: [ BingoService, AuthService ],
+  providers: [ BingoService, AuthService, AuthGuard ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }
