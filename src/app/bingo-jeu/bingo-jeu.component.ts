@@ -96,7 +96,7 @@ export class BingoJeuComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     // Lancer un timer pour modifier le score à la fin
     this.getScore = setTimeout(() => {
-      let tmp_score: number = Math.round(6 * (1 - eval((totalDegre / 360 - Math.trunc(totalDegre / 360)).toFixed(1))));
+      let tmp_score: number = Math.round(6 * (1 - eval((totalDegre / 360 - Math.trunc(totalDegre / 360)).toFixed(1)))) || 0;
       this.score = this.gains[tmp_score - 1];
       this.scorePromo += this.gains[tmp_score - 1]; // Calcul du nouveau score
       this.setScorePosition();
